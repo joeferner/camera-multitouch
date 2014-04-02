@@ -4,35 +4,150 @@
 #include <vector>
 #include "input.h"
 
+#define WINDOW_NAME   "Camera Multi-touch"
+#define CAMERA_COUNT  1
+#define BACKGROUND_SUBTRACTOR_REFRESH 0.001
+#define WINDOW_IMG_HEIGHT 768
+#define WINDOW_IMG_WIDTH 1024
+
+CvCapture* capture[CAMERA_COUNT];
+InputContext* inputContext;
+cv::Mat backgroundSubtractorOutput[CAMERA_COUNT];
+cv::Mat* backgroundSubtractorColorOutput[CAMERA_COUNT];
+cv::Ptr<cv::BackgroundSubtractor> backgroundSubtractor[CAMERA_COUNT];
+cv::Ptr<cv::FeatureDetector> blobDetector[CAMERA_COUNT];
+cv::Mat windowImg(WINDOW_IMG_HEIGHT + 1, WINDOW_IMG_WIDTH + 1, CV_8UC3 /*CV_8UC1*/);
+cv::Rect* cropRects[CAMERA_COUNT];
+
+int captureInput = 0;
+
+void initInputContext();
+void releaseInputContext();
+void initCameraCapture();
+void releaseCameraCapture();
+void initBackgroundSubtractors();
+void initDetectors();
+void displayCaptures(int cameraIdx, std::vector<cv::KeyPoint> &keypoints);
+
 int main(int argc, char** argv) {
+  if (captureInput) {
+    initInputContext();
+  }
+  initCameraCapture();
+  initBackgroundSubtractors();
+  initDetectors();
+
+  for (int i = 0; i < CAMERA_COUNT; i++) {
+    cropRects[i] = new cv::Rect(0, 500, 1280, 100);
+    backgroundSubtractorColorOutput[i] = NULL;
+  }
+
+  cv::namedWindow(WINDOW_NAME);
+
+  printf("begin loop\n");
+  while (1) {
+    int y = 0;
+    for (int i = 0; i < CAMERA_COUNT; i++) {
+      try {
+        IplImage* cameraIplImg = cvQueryFrame(capture[i]);
+        printf("depth: %d, ch: %d, width: %d, height: %d\n", cameraIplImg->depth, cameraIplImg->nChannels, cameraIplImg->width, cameraIplImg->height);
+        cv::Mat cameraImg = cameraIplImg;
+        cv::Mat croppedImg = cameraImg(*cropRects[i]);
+
+        backgroundSubtractor[i]->operator ()(croppedImg, backgroundSubtractorOutput[i], BACKGROUND_SUBTRACTOR_REFRESH);
+        if (backgroundSubtractorColorOutput[i] == NULL) {
+          backgroundSubtractorColorOutput[i] = new cv::Mat(backgroundSubtractorOutput[i].rows, backgroundSubtractorOutput[i].cols, CV_8UC3);
+        }
+        *backgroundSubtractorColorOutput[i] = cv::Scalar(0, 0, 0);
+        backgroundSubtractorColorOutput[i]->setTo(cv::Scalar(255, 0, 0), backgroundSubtractorOutput[i]);
+
+        std::vector<cv::KeyPoint> keypoints;
+        blobDetector[i]->detect(backgroundSubtractorOutput[i], keypoints);
+
+        displayCaptures(i, keypoints);
+
+        cv::Mat targetColorDisplayImg(windowImg, cv::Rect(0, y, WINDOW_IMG_WIDTH, cropRects[i]->height));
+        y += cropRects[i]->height;
+        cv::resize(croppedImg, targetColorDisplayImg, targetColorDisplayImg.size());
+
+        cv::Mat targetDisplayImg(windowImg, cv::Rect(0, y, WINDOW_IMG_WIDTH, cropRects[i]->height));
+        y += cropRects[i]->height;
+        cv::resize(*backgroundSubtractorColorOutput[i], targetDisplayImg, targetDisplayImg.size());
+      } catch (cv::Exception e) {
+        e.formatMessage();
+      }
+    }
+
+    cv::imshow(WINDOW_NAME, windowImg);
+
+    if (cv::waitKey(10) >= 0) {
+      break;
+    }
+  }
+
+  releaseCameraCapture();
+
+  if (captureInput) {
+    releaseInputContext();
+  }
+
+  cv::destroyAllWindows();
+
+  return 0;
+}
+
+void displayCaptures(int cameraIdx, std::vector<cv::KeyPoint> &keypoints) {
+  if (keypoints.size() > 0) {
+    float x = keypoints[0].pt.x;
+    float y = keypoints[0].pt.y;
+    if (captureInput) {
+      inputMouseMove(inputContext, x, y);
+    }
+  }
+  for (int j = 0; j < keypoints.size(); j++) {
+    float x = keypoints[j].pt.x;
+    float y = keypoints[j].pt.y;
+    printf("%f, %f\n", x, y);
+    cv::line(*backgroundSubtractorColorOutput[cameraIdx], cv::Point(x, y - 10), cv::Point(x, y + 10), cv::Scalar(0, 255, 0));
+    cv::line(*backgroundSubtractorColorOutput[cameraIdx], cv::Point(x - 10, y), cv::Point(x + 10, y), cv::Scalar(0, 255, 0));
+  }
+}
+
+void initInputContext() {
   InputContext* inputContext = inputBegin();
   if (!inputContext) {
     fprintf(stderr, "could not begin input\n");
-    return -1;
+    exit(-1);
   }
+}
 
-  CvCapture * capture[2];
+void releaseInputContext() {
+  inputEnd(inputContext);
+}
 
-  capture[0] = cvCaptureFromCAM(0);
-  if (!capture[0]) {
-    fprintf(stderr, "could not capture 0\n");
-    return -1;
+void initCameraCapture() {
+  for (int i = 0; i < CAMERA_COUNT; i++) {
+    capture[i] = cvCaptureFromCAM(i);
+    if (!capture[i]) {
+      fprintf(stderr, "could not capture %d\n", i);
+      exit(-1);
+    }
   }
+}
 
-  capture[1] = cvCaptureFromCAM(1);
-  if (!capture[1]) {
-    fprintf(stderr, "could not capture 1\n");
-    return -1;
+void releaseCameraCapture() {
+  for (int i = 0; i < CAMERA_COUNT; i++) {
+    cvReleaseCapture(&capture[0]);
   }
+}
 
-  cv::namedWindow("mog");
+void initBackgroundSubtractors() {
+  for (int i = 0; i < CAMERA_COUNT; i++) {
+    backgroundSubtractor[i] = new cv::BackgroundSubtractorMOG();
+  }
+}
 
-  cv::Mat sideBySide(768, 1025, CV_8UC1);
-  cv::Mat fgMaskMog[2];
-  cv::Ptr<cv::BackgroundSubtractor> mog[2];
-  mog[0] = new cv::BackgroundSubtractorMOG();
-  mog[1] = new cv::BackgroundSubtractorMOG();
-
+void initDetectors() {
   cv::SimpleBlobDetector::Params blobDetectorParams;
   blobDetectorParams.minDistBetweenBlobs = 50.0f;
   blobDetectorParams.filterByInertia = false;
@@ -42,61 +157,7 @@ int main(int argc, char** argv) {
   blobDetectorParams.filterByArea = true;
   blobDetectorParams.minArea = 500.0f;
   blobDetectorParams.maxArea = 10000.0f;
-  cv::Ptr<cv::FeatureDetector> blobDetector[2];
-  blobDetector[0] = new cv::SimpleBlobDetector(blobDetectorParams);
-  blobDetector[1] = new cv::SimpleBlobDetector(blobDetectorParams);
-
-  printf("begin loop\n");
-  while (1) {
-    for (int i = 0; i < 2; i++) {
-      try {
-        IplImage* iplImg = cvQueryFrame(capture[i]);
-        cv::Mat img = iplImg;
-
-        mog[i]->operator ()(img, fgMaskMog[i], 0.001);
-
-        std::vector<cv::KeyPoint> keypoints;
-        blobDetector[i]->detect(fgMaskMog[i], keypoints);
-
-        if (keypoints.size() > 0) {
-          float x = keypoints[0].pt.x;
-          float y = keypoints[0].pt.y;
-          //inputMouseMove(inputContext, x, y);
-        }
-        for (int j = 0; j < keypoints.size(); j++) {
-          float x = keypoints[j].pt.x;
-          float y = keypoints[j].pt.y;
-          printf("%f, %f\n", x, y);
-          cv::line(fgMaskMog[i], cv::Point(x, y - 10), cv::Point(x, y + 10), cv::Scalar(0, 0, 0));
-          cv::line(fgMaskMog[i], cv::Point(x - 10, y), cv::Point(x + 10, y), cv::Scalar(0, 0, 0));
-        }
-
-        if (i == 0) {
-          cv::Mat left(sideBySide, cv::Rect(0, 0, 512, 384));
-          cv::resize(fgMaskMog[0], left, left.size());
-        }
-        if (i == 1) {
-          cv::Mat right(sideBySide, cv::Rect(512, 0, 512, 384));
-          cv::resize(fgMaskMog[1], right, right.size());
-        }
-      } catch (cv::Exception e) {
-
-      }
-    }
-
-    cv::imshow("mog", sideBySide);
-
-    if (cv::waitKey(10) >= 0) {
-      break;
-    }
+  for (int i = 0; i < CAMERA_COUNT; i++) {
+    blobDetector[i] = new cv::SimpleBlobDetector(blobDetectorParams);
   }
-
-  cvReleaseCapture(&capture[0]);
-  cvReleaseCapture(&capture[1]);
-
-  cv::destroyAllWindows();
-
-  inputEnd(inputContext);
-
-  return 0;
 }
