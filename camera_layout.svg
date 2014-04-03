@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
+    version="1.1" baseProfile="full">
+    <g>
+        <g latexdraw:type="rectangle" id="id14">
+            <rect x="209.3125" y="130.234375" width="498.0"
+                height="298.0" latexdraw:borderPos="outer"
+                stroke-width="2.0" stroke="black" fill="none"/>
+        </g>
+        <g latexdraw:type="rectangle" id="id15" transform="rotate(35.0) translate(20.5618631228281 -43.254851792734584)">
+            <rect x="52.3125" y="39.234375" width="12.0" height="30.0"
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="none"/>
+        </g>
+        <g latexdraw:type="rectangle" id="id16" transform="rotate(-35.0) translate(-181.81042163365532 468.160238268767)">
+            <rect x="827.3125000000001" y="39.234374999999204"
+                width="12.0" height="30.0" latexdraw:borderPos="outer"
+                stroke-width="2.0" stroke="black" fill="none"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id17">
+            <polyline points="62.3125,56.234375 209.3125,427.234375 "
+                stroke-width="1.0" stroke="#b3b3b3" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id18">
+            <polyline points="63.3125,56.234375 707.3125,128.234375 "
+                stroke-width="1.0" stroke="#b3b3b3" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="arc" id="id19">
+            <path
+                d="M 73.99986791900733 84.67121459503669 A 29.0 29.0 0.0 0 0 96.97527923186789 60.64403334336432 "
+                latexdraw:borderPos="outer" stroke-width="1.0"
+                stroke="#b3b3b3" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="text" id="id23" fill="black" latexdraw:position="bl">
+            <text x="83.55120967741937" y="104.31179435483864"><![CDATA[$\theta_{fov}$]]></text>
+        </g>
+        <g latexdraw:type="dot" id="id29" latexdraw:size="5.0"
+            latexdraw:dotShape="*" latexdraw:position="424.0194483403458 252.7943899018233">
+            <path
+                d="M 426.3271406480381 252.7943899018233 C 426.3271406480381 254.06889317066359 425.2939516091861 255.1020822095156 424.0194483403458 255.1020822095156 C 422.74494507150547 255.1020822095156 421.71175603265345 254.06889317066359 421.71175603265345 252.7943899018233 C 421.71175603265345 251.519886632983 422.74494507150547 250.486697594131 424.0194483403458 250.486697594131 C 425.2939516091861 250.486697594131 426.3271406480381 251.519886632983 426.3271406480381 252.7943899018233 z "
+                fill="black" stroke-linecap="square"
+                stroke-linejoin="butt" stroke-width="0.3125"
+                stroke-miterlimit="10.0" stroke-dashoffset="0.0" stroke="black"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id46">
+            <polyline
+                points="63.87096774193548,56.774193548387096 418.06451612903226,249.6774193548387 "
+                stroke-width="2.0" stroke="black" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id47">
+            <polyline
+                points="827.741935483871,58.064516129032256 429.0322580645161,249.03225806451613 "
+                stroke-width="2.0" stroke="black" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id48">
+            <polyline
+                points="63.87096774193548,56.12903225806451 827.0967741935484,58.064516129032256 "
+                stroke-width="2.0" stroke="black" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="text" id="id50" fill="black" latexdraw:position="bl">
+            <text x="428.3870967741935" y="274.19354838709677"><![CDATA[P]]></text>
+        </g>
+        <g latexdraw:type="text" id="id54" fill="black" latexdraw:position="bl">
+            <text x="38.7096774193549" y="44.51612903225814"><![CDATA[A]]></text>
+        </g>
+        <g latexdraw:type="text" id="id57" fill="black" latexdraw:position="bl">
+            <text x="841.9354838709675" y="42.58064516129034"><![CDATA[B]]></text>
+        </g>
+        <g latexdraw:type="text" id="id65" fill="black" latexdraw:position="bl">
+            <text x="416.13185483870984" y="241.40856854838717"><![CDATA[$\theta_{P}$]]></text>
+        </g>
+        <g latexdraw:type="arc" id="id73" transform="rotate(107.49661231116806) translate(-320.73329369805623 -724.8633800674825)">
+            <path
+                d="M 410.9860454216205 225.14984358232883 A 24.838709677419303 24.838709677419303 0.0 0 0 426.1290322580644 269.6774193548388 "
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="none" latexdraw:rotationAngle="1.876169819569754"/>
+        </g>
+        <g latexdraw:type="text" id="id88" fill="black" latexdraw:position="bl">
+            <text x="159.68024193548422" y="91.40856854838717"><![CDATA[$\theta_{A}$]]></text>
+        </g>
+        <g latexdraw:type="arc" id="id102" transform="rotate(239.28848030527178) translate(-254.07153682969846 5.8826447611368025)">
+            <path
+                d="M 103.61813272908637 62.06507110026512 A 26.12903225806457 26.12903225806457 0.0 1 0 125.75178699509672 95.31590977735588 "
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="none" latexdraw:rotationAngle="4.176371843420599"/>
+        </g>
+        <g latexdraw:type="text" id="id131" fill="black" latexdraw:position="bl">
+            <text x="708.3899193548393" y="93.02147177419351"><![CDATA[$\theta_{B}$]]></text>
+        </g>
+        <g latexdraw:type="arc" id="id135" transform="rotate(371.4515105374019) translate(-0.8471220333541396 -151.67444505424328)">
+            <path
+                d="M 731.6826488581185 64.3231356163944 A 26.12903225806457 26.12903225806457 0.0 1 0 753.8163031241288 97.57397429348515 "
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="none" latexdraw:rotationAngle="6.483051870384075"/>
+        </g>
+        <g latexdraw:type="text" id="id146" fill="black" latexdraw:position="bl">
+            <text x="419.3548387096774" y="48.387096774193544"><![CDATA[$d_P$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id149" fill="black" latexdraw:position="bl">
+            <text x="627.0967741935483" y="177.4193548387096"><![CDATA[$d_A$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id152" fill="black" latexdraw:position="bl">
+            <text x="239.35483870967755" y="185.16129032258044"><![CDATA[$d_B$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id168" fill="black" latexdraw:position="bl">
+            <text x="750.6666666666672" y="162.33333333333326"><![CDATA[$\theta_A=\frac{x_A}{C_w}\cdot \theta_{fov}$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id184" fill="black" latexdraw:position="bl">
+            <text x="751.3809523809525" y="193.04761904761904"><![CDATA[$\theta_B=\frac{x_B}{C_w}\cdot \theta_{fov}$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id189" fill="black" latexdraw:position="bl">
+            <text x="752.8571428571429" y="216.54761904761926"><![CDATA[$\theta_P=180^{\circ}-\theta_A-\theta_B$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id192" fill="black" latexdraw:position="bl">
+            <text x="752.7116402116404" y="258.83597883597884"><![CDATA[$d_A=d_P\cdot\frac{\sin\theta_A}{\sin\theta_P}$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id197" fill="black" latexdraw:position="bl">
+            <text x="753.8095238095244" y="288.8095238095242"><![CDATA[$d_B=d_P\cdot\frac{\sin\theta_B}{\sin\theta_P}$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id202" fill="black" latexdraw:position="bl">
+            <text x="929.0211640211631" y="254.6693121693122"><![CDATA[\footnotesize(\textit{Law of sines})]]></text>
+        </g>
+        <g latexdraw:type="text" id="id264" fill="black" latexdraw:position="bl">
+            <text x="760.0000000000003" y="360.83333333333354"><![CDATA[$y'=\sin\theta_A \cdot d_A$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id283" fill="black" latexdraw:position="bl">
+            <text x="758.3333333333334" y="331.6666666666666"><![CDATA[$x'=\cos\theta_A \cdot d_A$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id307" fill="black" latexdraw:position="bl">
+            <text x="763.2407407407409" y="401.2037037037037"><![CDATA[$x=x'-d_{C_x}$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id318" fill="black" latexdraw:position="bl">
+            <text x="764.25925925926" y="427.4999999999998"><![CDATA[$y=y'-d_{C_y}$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id329" fill="black" latexdraw:position="bl">
+            <text x="7.942176870748128" y="96.90476190476187"><![CDATA[$d_{C_y}$]]></text>
+        </g>
+        <g latexdraw:type="joinedLines" id="id336">
+            <polyline
+                points="42.50000000000001,55.000000000000014 36.73469387755104,55.10204081632656 37.14285714285716,128.57142857142864 41.63265306122451,128.57142857142864 41.63265306122451,128.57142857142864 "
+                stroke-width="1.0" stroke="#b3b3b3" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="text" id="id341" fill="black" latexdraw:position="bl">
+            <text x="117.94217687074814" y="21.19047619047609"><![CDATA[$d_{C_x}$]]></text>
+        </g>
+        <g latexdraw:type="joinedLines" id="id347">
+            <polyline
+                points="62.04081632653064,31.428571428571445 62.04081632653064,24.48979591836736 209.38775510204093,24.48979591836736 209.38775510204093,30.204081632653075 "
+                stroke-width="1.0" stroke="#b3b3b3" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="text" id="id356" fill="black" latexdraw:position="bl">
+            <text x="69.39153439153449" y="457.037037037037"><![CDATA[$x_A$ and $x_B$ $\rightarrow$ x-coordinate of the detected blob (P) in camera A and B respectively]]></text>
+        </g>
+        <g latexdraw:type="text" id="id373" fill="black" latexdraw:position="bl">
+            <text x="129.76190476190447" y="477.407407407407"><![CDATA[$C_w$ $\rightarrow$ x resolution of the camera]]></text>
+        </g>
+        <g latexdraw:type="text" id="id389" fill="black" latexdraw:position="bl">
+            <text x="133.0952380952375" y="499.9999999999996"><![CDATA[$d_P$ $\rightarrow$ distance of cameras in pixels]]></text>
+        </g>
+    </g>
+    <defs/>
+    <metadata>
+        <latexdraw:metadata>
+            <latexdraw:latexIncludes><![CDATA[
+\usepackage{amsmath}]]></latexdraw:latexIncludes>
+            <latexdraw:displayXScale>true</latexdraw:displayXScale>
+            <latexdraw:displayYScale>true</latexdraw:displayYScale>
+            <latexdraw:unit>CM</latexdraw:unit>
+            <latexdraw:zoom>1.3499999999999999</latexdraw:zoom>
+            <latexdraw:magneticGridStyle>CUSTOMISED</latexdraw:magneticGridStyle>
+            <latexdraw:gridGap>10</latexdraw:gridGap>
+            <latexdraw:magneticGrid>false</latexdraw:magneticGrid>
+            <latexdraw:version>3.1.0</latexdraw:version>
+            <latexdraw:size>
+                <latexdraw:width>1488</latexdraw:width>
+                <latexdraw:height>949</latexdraw:height>
+            </latexdraw:size>
+            <latexdraw:position>
+                <latexdraw:x>408.0</latexdraw:x>
+                <latexdraw:y>34.0</latexdraw:y>
+            </latexdraw:position>
+        </latexdraw:metadata>
+    </metadata>
+</svg>
