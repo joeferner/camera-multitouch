@@ -34,7 +34,7 @@ void inputEnd(InputContext* ctx) {
   delete x11ctx;
 }
 
-void inputMouseMove(InputContext* ctx, int x, int y) {
+void inputMouseMove(InputContext* ctx, int mouseLButtonState, int x, int y) {
   X11InputContext* x11ctx = (X11InputContext*) ctx;
   int r = XWarpPointer(x11ctx->display, None, x11ctx->rootWindow, 0, 0, 0, 0, x, y);
   XFlush(x11ctx->display);

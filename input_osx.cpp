@@ -25,9 +25,9 @@ void inputEnd(InputContext* ctx) {
   printf("inputEnd complete\n");
 }
 
-void inputMouseMove(InputContext* ctx, int x, int y) {
+void inputMouseMove(InputContext* ctx, int mouseLButtonState, int x, int y) {
   CGEventRef mouseMove = CGEventCreateMouseEvent(
-      NULL, kCGEventMouseMoved,
+      NULL, mouseLButtonState == MOUSE_LBUTTON_DOWN ? kCGEventLeftMouseDragged : kCGEventMouseMoved,
       CGPointMake(x, y),
       kCGMouseButtonLeft // ignored
   );

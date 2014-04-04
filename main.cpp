@@ -33,11 +33,8 @@ cv::Mat windowImg(PREVIEW_WINDOW_HEIGHT + 1, PREVIEW_WINDOW_WIDTH + 1, CV_8UC3 /
 cv::Rect* cropRects[CAMERA_COUNT];
 cv::KeyPoint detectedBlobCoords[CAMERA_COUNT];
 
-#define MOUSE_LBUTTON_UP   1
-#define MOUSE_LBUTTON_DOWN 2
-
 int captureInput = 1;
-int mouseState = MOUSE_LBUTTON_UP;
+int mouseLButtonState = MOUSE_LBUTTON_UP;
 int mouseX = 0;
 int mouseY = 0;
 
@@ -145,9 +142,9 @@ void calculateLocations() {
     return;
   }
   if (detectedBlobCoords[0].pt.x < 0 || detectedBlobCoords[1].pt.x < 0) {
-    if (mouseState == MOUSE_LBUTTON_DOWN) {
+    if (mouseLButtonState == MOUSE_LBUTTON_DOWN) {
       inputMouseUp(inputContext, mouseX, mouseY);
-      mouseState = MOUSE_LBUTTON_UP;
+      mouseLButtonState = MOUSE_LBUTTON_UP;
     }
     return;
   }
@@ -174,10 +171,10 @@ void calculateLocations() {
           d_A, d_B,
           x_prime, y_prime);
   if (captureInput) {
-    inputMouseMove(inputContext, x, y);
-    if (mouseState == MOUSE_LBUTTON_UP) {
+    inputMouseMove(inputContext, mouseLButtonState, x, y);
+    if (mouseLButtonState == MOUSE_LBUTTON_UP) {
       inputMouseDown(inputContext, mouseX, mouseY);
-      mouseState = MOUSE_LBUTTON_DOWN;
+      mouseLButtonState = MOUSE_LBUTTON_DOWN;
     }
     mouseX = x;
     mouseY = y;
