@@ -7,7 +7,8 @@ set(LIBS ${LIBS} ${OpenCV_LIBS})
 set(SRC ${SRC} main.cpp)
 
 IF (APPLE)
-  set(CMAKE_EXE_LINKER_FLAGS "-framework Foundation -framework CoreGraphics")
+  set(CMAKE_EXE_LINKER_FLAGS 
+    "-framework CoreGraphics -framework ApplicationServices")
   set(SRC ${SRC} input_osx.cpp)
 ELSE()
   find_package(X11)

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "input.h"
 #include <CoreGraphics/CoreGraphics.h>
+#include <ApplicationServices/ApplicationServices.h>
 
 typedef struct {
   CGDirectDisplayID displayID;
@@ -23,14 +24,27 @@ void inputEnd(InputContext* ctx) {
 }
 
 void inputMouseMove(InputContext* ctx, int x, int y) {
-  CGPoint point = (CGPoint) {x, y};
-  CGWarpMouseCursorPosition(point);
+  CGWarpMouseCursorPosition(CGPointMake(x, y));
 }
 
 void inputMouseDown(InputContext* ctx, int x, int y) {
-  printf("not implemented\n");
+  CGEventRef mouseDown = CGEventCreateMouseEvent(
+      NULL, kCGEventLeftMouseDown,
+      CGPointMake(x, y),
+      kCGMouseButtonLeft
+  );
+
+  CGEventPost(kCGHIDEventTap, mouseDown);
+  CFRelease(mouseDown);
 }
 
 void inputMouseUp(InputContext* ctx, int x, int y) {
-  printf("not implemented\n");  
+  CGEventRef mouseUp = CGEventCreateMouseEvent(
+      NULL, kCGEventLeftMouseUp,
+      CGPointMake(x, y),
+      kCGMouseButtonLeft
+  );
+
+  CGEventPost(kCGHIDEventTap, mouseUp);
+  CFRelease(mouseUp);
 }
