@@ -23,8 +23,8 @@
 #define CAMERA_DISTANCE_FROM_SCREEN_Y  (PX_PER_MM * DCY_MM)
 #define CAMERA_WIDTH                   1920       /* set to camera x resolution */
 #define CAMERA_FOV                     1.20427718 /* 69 degrees */
-#define TIME_MS_UNTIL_MOUSE_CLICK      1000
-#define MOUSE_CLICK_RADIUS             50
+#define TIME_MS_UNTIL_MOUSE_CLICK      2000
+#define MOUSE_CLICK_RADIUS             10
 
 CvCapture* capture[CAMERA_COUNT];
 InputContext* inputContext;
