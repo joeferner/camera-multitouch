@@ -14,6 +14,7 @@ InputContext* inputBegin() {
 
   ctx->displayID = CGMainDisplayID();
 
+  printf("inputBegin complete\n");
   return ctx;
 }
 
@@ -21,6 +22,7 @@ void inputEnd(InputContext* ctx) {
   OSXInputContext* osxctx = (OSXInputContext*) ctx;
 
   delete osxctx;
+  printf("inputEnd complete\n");
 }
 
 void inputMouseMove(InputContext* ctx, int x, int y) {
