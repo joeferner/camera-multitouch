@@ -182,14 +182,16 @@ void calculateLocations() {
           x_prime, y_prime);
   if (captureInput) {
     if (mouseLButtonState == MOUSE_LBUTTON_UP) {
-      if (mouseStartLButtonDownTime == 0
-              || distance(x, y, mouseStartLButtonDownX, mouseStartLButtonDownY) > MOUSE_CLICK_RADIUS) {
-        mouseStartLButtonDownTime = timems();
+      int d = distance(x, y, mouseStartLButtonDownX, mouseStartLButtonDownY);
+      long t = timems();
+      printf("button down? d=%d, time=%d (%d)\n", d, t, t - mouseStartLButtonDownTime);
+      if (mouseStartLButtonDownTime == 0 || d > MOUSE_CLICK_RADIUS) {
+        mouseStartLButtonDownTime = t;
         mouseStartLButtonDownX = x;
         mouseStartLButtonDownY = y;
         printf("begin L-Button timer %d,%d %ldms\n", x, y, mouseStartLButtonDownTime);
       }
-      if (timems() - mouseStartLButtonDownTime > TIME_MS_UNTIL_MOUSE_CLICK) {
+      if (t - mouseStartLButtonDownTime > TIME_MS_UNTIL_MOUSE_CLICK) {
         inputMouseDown(inputContext, x, y);
         mouseLButtonState = MOUSE_LBUTTON_DOWN;
         printf("mouse down\n");
