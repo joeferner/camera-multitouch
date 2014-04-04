@@ -187,7 +187,7 @@ void calculateLocations() {
         mouseStartLButtonDownTime = timems();
         mouseStartLButtonDownX = x;
         mouseStartLButtonDownY = y;
-        printf("begin L-Button timer %d,%d %dms\n", x, y, mouseStartLButtonDownTime);
+        printf("begin L-Button timer %d,%d %ldms\n", x, y, mouseStartLButtonDownTime);
       }
       if (timems() - mouseStartLButtonDownTime > TIME_MS_UNTIL_MOUSE_CLICK) {
         inputMouseDown(inputContext, x, y);
