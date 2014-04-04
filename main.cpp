@@ -134,8 +134,10 @@ void calculateLocations() {
     return;
   }
 
-  float theta_A = detectedBlobCoords[0].pt.x / (float) CAMERA_WIDTH * CAMERA_FOV;
-  float theta_B = detectedBlobCoords[1].pt.x / (float) CAMERA_WIDTH * CAMERA_FOV;
+  float camera_ct = atan2(CAMERA_DISTANCE_FROM_SCREEN_Y, CAMERA_DISTANCE - CAMERA_DISTANCE_FROM_SCREEN_X);
+  
+  float theta_A = detectedBlobCoords[0].pt.x / (float) CAMERA_WIDTH * CAMERA_FOV + camera_ct;
+  float theta_B = detectedBlobCoords[1].pt.x / (float) CAMERA_WIDTH * CAMERA_FOV + camera_ct;
   float theta_P = PI - theta_A - theta_B;
 
   float d_A = CAMERA_DISTANCE * sin(theta_A) / sin(theta_P);
@@ -144,12 +146,13 @@ void calculateLocations() {
   float x_prime = cos(theta_A) * d_A;
   float y_prime = sin(theta_A) * d_A;
 
-  float x = x_prime - CAMERA_DISTANCE_FROM_SCREEN_X;
-  float y = y_prime - CAMERA_DISTANCE_FROM_SCREEN_Y;
+  int x = x_prime - CAMERA_DISTANCE_FROM_SCREEN_X;
+  int y = y_prime - CAMERA_DISTANCE_FROM_SCREEN_Y;
 
   printf(
-          "x=%d, y=%d (theta_A=%.2f, theta_B=%.2f, theta_P=%.2f, d_A=%.2f, d_B=%.2f, x_prime=%d, y_prime=%d)\n",
+          "x=%d, y=%d (camera_ct=%.2f, theta_A=%.2f, theta_B=%.2f, theta_P=%.2f, d_A=%.2f, d_B=%.2f, x_prime=%.2f, y_prime=%.2f)\n",
           x, y,
+          camera_ct,
           theta_A, theta_B, theta_P,
           d_A, d_B,
           x_prime, y_prime);

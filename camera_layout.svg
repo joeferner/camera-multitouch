@@ -3,6 +3,12 @@
     xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
     version="1.1" baseProfile="full">
     <g>
+        <g latexdraw:type="arc" id="id84" transform="rotate(21.879124944007106) translate(8.319342199156154 -91.51256717603047)">
+            <path
+                d="M 261.56891025640994 67.2771100427351 A 29.0 29.0 0.0 0 0 254.78419910686029 48.63626936182547 "
+                latexdraw:borderPos="outer" stroke-width="1.0"
+                stroke="#b3b3b3" fill="none" latexdraw:rotationAngle="0.381862767728144"/>
+        </g>
         <g latexdraw:type="rectangle" id="id14">
             <rect x="209.3125" y="130.234375" width="498.0"
                 height="298.0" latexdraw:borderPos="outer"
@@ -13,8 +19,8 @@
                 latexdraw:borderPos="outer" stroke-width="2.0"
                 stroke="black" fill="none"/>
         </g>
-        <g latexdraw:type="rectangle" id="id16" transform="rotate(-35.0) translate(-181.81042163365532 468.160238268767)">
-            <rect x="827.3125000000001" y="39.234374999999204"
+        <g latexdraw:type="rectangle" id="id16" transform="rotate(-35.0) translate(-181.8104216336551 468.1602382687673)">
+            <rect x="827.3125000000002" y="39.23437499999869"
                 width="12.0" height="30.0" latexdraw:borderPos="outer"
                 stroke-width="2.0" stroke="black" fill="none"/>
         </g>
@@ -70,29 +76,17 @@
         <g latexdraw:type="text" id="id65" fill="black" latexdraw:position="bl">
             <text x="416.13185483870984" y="241.40856854838717"><![CDATA[$\theta_{P}$]]></text>
         </g>
-        <g latexdraw:type="arc" id="id73" transform="rotate(107.49661231116806) translate(-320.73329369805623 -724.8633800674825)">
+        <g latexdraw:type="arc" id="id73" transform="rotate(107.49661231116805) translate(-320.7332936980564 -724.8633800674824)">
             <path
-                d="M 410.9860454216205 225.14984358232883 A 24.838709677419303 24.838709677419303 0.0 0 0 426.1290322580644 269.6774193548388 "
+                d="M 410.9860454216206 225.1498435823287 A 24.838709677419303 24.838709677419303 0.0 0 0 426.1290322580645 269.67741935483866 "
                 latexdraw:borderPos="outer" stroke-width="2.0"
-                stroke="black" fill="none" latexdraw:rotationAngle="1.876169819569754"/>
+                stroke="black" fill="none" latexdraw:rotationAngle="1.8761698195697538"/>
         </g>
         <g latexdraw:type="text" id="id88" fill="black" latexdraw:position="bl">
             <text x="159.68024193548422" y="91.40856854838717"><![CDATA[$\theta_{A}$]]></text>
         </g>
-        <g latexdraw:type="arc" id="id102" transform="rotate(239.28848030527178) translate(-254.07153682969846 5.8826447611368025)">
-            <path
-                d="M 103.61813272908637 62.06507110026512 A 26.12903225806457 26.12903225806457 0.0 1 0 125.75178699509672 95.31590977735588 "
-                latexdraw:borderPos="outer" stroke-width="2.0"
-                stroke="black" fill="none" latexdraw:rotationAngle="4.176371843420599"/>
-        </g>
         <g latexdraw:type="text" id="id131" fill="black" latexdraw:position="bl">
             <text x="708.3899193548393" y="93.02147177419351"><![CDATA[$\theta_{B}$]]></text>
-        </g>
-        <g latexdraw:type="arc" id="id135" transform="rotate(371.4515105374019) translate(-0.8471220333541396 -151.67444505424328)">
-            <path
-                d="M 731.6826488581185 64.3231356163944 A 26.12903225806457 26.12903225806457 0.0 1 0 753.8163031241288 97.57397429348515 "
-                latexdraw:borderPos="outer" stroke-width="2.0"
-                stroke="black" fill="none" latexdraw:rotationAngle="6.483051870384075"/>
         </g>
         <g latexdraw:type="text" id="id146" fill="black" latexdraw:position="bl">
             <text x="419.3548387096774" y="48.387096774193544"><![CDATA[$d_P$]]></text>
@@ -104,10 +98,10 @@
             <text x="239.35483870967755" y="185.16129032258044"><![CDATA[$d_B$]]></text>
         </g>
         <g latexdraw:type="text" id="id168" fill="black" latexdraw:position="bl">
-            <text x="750.6666666666672" y="162.33333333333326"><![CDATA[$\theta_A=\frac{x_A}{C_w}\cdot \theta_{fov}$]]></text>
+            <text x="750.6666666666672" y="162.33333333333326"><![CDATA[$\theta_A=\frac{x_A}{C_w}\cdot \theta_{fov} + \theta_{CT}$]]></text>
         </g>
         <g latexdraw:type="text" id="id184" fill="black" latexdraw:position="bl">
-            <text x="751.3809523809525" y="193.04761904761904"><![CDATA[$\theta_B=\frac{x_B}{C_w}\cdot \theta_{fov}$]]></text>
+            <text x="751.3809523809525" y="193.04761904761904"><![CDATA[$\theta_B=\frac{x_B}{C_w}\cdot \theta_{fov} + \theta_{CT}$]]></text>
         </g>
         <g latexdraw:type="text" id="id189" fill="black" latexdraw:position="bl">
             <text x="752.8571428571429" y="216.54761904761926"><![CDATA[$\theta_P=180^{\circ}-\theta_A-\theta_B$]]></text>
@@ -158,6 +152,24 @@
         <g latexdraw:type="text" id="id389" fill="black" latexdraw:position="bl">
             <text x="133.0952380952375" y="499.9999999999996"><![CDATA[$d_P$ $\rightarrow$ distance of cameras in pixels]]></text>
         </g>
+        <g latexdraw:type="arc" id="id56" transform="rotate(92.98397692178779) translate(-61.11518568691593 -194.93546598106894)">
+            <path
+                d="M 148.88616040664584 54.738523549335696 A 29.230769230769226 29.230769230769226 0.0 0 0 110.53685015324798 42.05728802924293 "
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="none" latexdraw:rotationAngle="1.6228765488836188"/>
+        </g>
+        <g latexdraw:type="arc" id="id71" transform="rotate(224.48162376603096) translate(-1347.0357235156653 415.45009629850915)">
+            <path
+                d="M 784.2707757912615 53.96929278010498 A 29.230769230769226 29.230769230769226 0.0 0 0 745.9214655378637 41.288057260012216 "
+                latexdraw:borderPos="outer" stroke-width="2.0"
+                stroke="black" fill="none" latexdraw:rotationAngle="3.917943444940393"/>
+        </g>
+        <g latexdraw:type="text" id="id105" fill="black" latexdraw:position="bl">
+            <text x="269.11111111111154" y="76.44444444444456"><![CDATA[$\theta_{CT}$]]></text>
+        </g>
+        <g latexdraw:type="text" id="id114" fill="black" latexdraw:position="bl">
+            <text x="748.8000000000003" y="130.4000000000001"><![CDATA[$\theta_{CT}=\tan^{-1}\frac{d_{C_y}}{ d_P - d_{C_x} }$]]></text>
+        </g>
     </g>
     <defs/>
     <metadata>
@@ -167,7 +179,7 @@
             <latexdraw:displayXScale>true</latexdraw:displayXScale>
             <latexdraw:displayYScale>true</latexdraw:displayYScale>
             <latexdraw:unit>CM</latexdraw:unit>
-            <latexdraw:zoom>1.3499999999999999</latexdraw:zoom>
+            <latexdraw:zoom>1.2500000000000002</latexdraw:zoom>
             <latexdraw:magneticGridStyle>CUSTOMISED</latexdraw:magneticGridStyle>
             <latexdraw:gridGap>10</latexdraw:gridGap>
             <latexdraw:magneticGrid>false</latexdraw:magneticGrid>
@@ -177,8 +189,8 @@
                 <latexdraw:height>949</latexdraw:height>
             </latexdraw:size>
             <latexdraw:position>
-                <latexdraw:x>408.0</latexdraw:x>
-                <latexdraw:y>34.0</latexdraw:y>
+                <latexdraw:x>348.0</latexdraw:x>
+                <latexdraw:y>11.0</latexdraw:y>
             </latexdraw:position>
         </latexdraw:metadata>
     </metadata>
