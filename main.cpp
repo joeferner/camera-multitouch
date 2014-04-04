@@ -3,6 +3,7 @@
 #include <opencv2/video/background_segm.hpp>
 #include <vector>
 #include <math.h>
+#include <sys/time.h>
 #include "input.h"
 
 #define WINDOW_NAME                    "Camera Multi-touch"
@@ -22,6 +23,7 @@
 #define CAMERA_DISTANCE_FROM_SCREEN_Y  (PX_PER_MM * DCY_MM)
 #define CAMERA_WIDTH                   1920       /* set to camera x resolution */
 #define CAMERA_FOV                     1.20427718 /* 69 degrees */
+#define TIME_MS_UNTIL_MOUSE_CLICK      1000
 
 CvCapture* capture[CAMERA_COUNT];
 InputContext* inputContext;
@@ -37,6 +39,7 @@ int captureInput = 1;
 int mouseLButtonState = MOUSE_LBUTTON_UP;
 int mouseX = 0;
 int mouseY = 0;
+long mouseStartLButtonDownTime = 0;
 
 void initInputContext();
 void releaseInputContext();
@@ -46,6 +49,7 @@ void initBackgroundSubtractors();
 void initDetectors();
 void displayCaptures(int cameraIdx, std::vector<cv::KeyPoint> &keypoints);
 void calculateLocations();
+long timems();
 
 int main(int argc, char** argv) {
   if (captureInput) {
@@ -145,6 +149,7 @@ void calculateLocations() {
     if (mouseLButtonState == MOUSE_LBUTTON_DOWN) {
       inputMouseUp(inputContext, mouseX, mouseY);
       mouseLButtonState = MOUSE_LBUTTON_UP;
+      mouseStartLButtonDownTime = 0;
     }
     return;
   }
@@ -172,8 +177,13 @@ void calculateLocations() {
           x_prime, y_prime);
   if (captureInput) {
     if (mouseLButtonState == MOUSE_LBUTTON_UP) {
-      inputMouseDown(inputContext, mouseX, mouseY);
-      mouseLButtonState = MOUSE_LBUTTON_DOWN;
+      if (mouseStartLButtonDownTime == 0) {
+        mouseStartLButtonDownTime = timems();
+      }
+      if (timems() - mouseStartLButtonDownTime > TIME_MS_UNTIL_MOUSE_CLICK) {
+        inputMouseDown(inputContext, mouseX, mouseY);
+        mouseLButtonState = MOUSE_LBUTTON_DOWN;
+      }
     }
     inputMouseMove(inputContext, mouseLButtonState, x, y);
     mouseX = x;
@@ -228,4 +238,10 @@ void initDetectors() {
   for (int i = 0; i < CAMERA_COUNT; i++) {
     blobDetector[i] = new cv::SimpleBlobDetector(blobDetectorParams);
   }
+}
+
+long timems() {
+  struct timeval start;
+  gettimeofday(&start, NULL);
+  return ((start.tv_sec) * 1000 + start.tv_usec / 1000.0) + 0.5;
 }
