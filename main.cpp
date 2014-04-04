@@ -9,12 +9,18 @@
 #define CAMERA_COUNT                   2
 #define PI                             3.1415
 #define BACKGROUND_SUBTRACTOR_REFRESH  0.001
-#define PREVIEW_WINDOW_WIDTH           1024
-#define PREVIEW_WINDOW_HEIGHT          768
-#define CAMERA_DISTANCE                2000       /* calibrate to the x distance of the two cameras */
-#define CAMERA_DISTANCE_FROM_SCREEN_X  200        /* calibrate to the x distance from top of screen to camera */
-#define CAMERA_DISTANCE_FROM_SCREEN_Y  200        /* calibrate to the y distance from top of screen to camera */
-#define CAMERA_WIDTH                   1280       /* set to camera x resolution */
+#define PREVIEW_WINDOW_WIDTH           1920
+#define PREVIEW_WINDOW_HEIGHT          200
+
+#define TV_HEIGHT_MM                   1510.0
+#define TV_WIDTH_MM                    2608.0
+#define DCX_MM                         570.0
+#define DCY_MM                         260.0
+#define PX_PER_MM                      (1080.0 / TV_HEIGHT_MM)
+#define CAMERA_DISTANCE                (PX_PER_MM * (TV_WIDTH_MM + 2 * DCX_MM))
+#define CAMERA_DISTANCE_FROM_SCREEN_X  (PX_PER_MM * DCX_MM)
+#define CAMERA_DISTANCE_FROM_SCREEN_Y  (PX_PER_MM * DCY_MM)
+#define CAMERA_WIDTH                   1920       /* set to camera x resolution */
 #define CAMERA_FOV                     1.20427718 /* 69 degrees */
 
 CvCapture* capture[CAMERA_COUNT];
@@ -47,9 +53,10 @@ int main(int argc, char** argv) {
   initDetectors();
 
   for (int i = 0; i < CAMERA_COUNT; i++) {
-    cropRects[i] = new cv::Rect(0, 500, CAMERA_WIDTH, 100);
     backgroundSubtractorColorOutput[i] = NULL;
   }
+  cropRects[0] = new cv::Rect(0, 610, CAMERA_WIDTH, 50);
+  cropRects[1] = new cv::Rect(0, 525, CAMERA_WIDTH, 50);
 
   cv::namedWindow(WINDOW_NAME);
 
@@ -59,7 +66,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < CAMERA_COUNT; i++) {
       try {
         IplImage* cameraIplImg = cvQueryFrame(capture[i]);
-        printf("depth: %d, ch: %d, width: %d, height: %d\n", cameraIplImg->depth, cameraIplImg->nChannels, cameraIplImg->width, cameraIplImg->height);
+        // printf("depth: %d, ch: %d, width: %d, height: %d\n", cameraIplImg->depth, cameraIplImg->nChannels, cameraIplImg->width, cameraIplImg->height);
         cv::Mat cameraImg = cameraIplImg;
         cv::Mat croppedImg = cameraImg(*cropRects[i]);
 
@@ -112,7 +119,7 @@ void displayCaptures(int cameraIdx, std::vector<cv::KeyPoint> &keypoints) {
     float y = keypoints[0].pt.y;
     detectedBlobCoords[cameraIdx].pt.x = x;
     detectedBlobCoords[cameraIdx].pt.y = y;
-    printf("%f, %f\n", x, y);
+    // printf("%f, %f\n", x, y);
   } else {
     detectedBlobCoords[cameraIdx].pt.x = -1;
     detectedBlobCoords[cameraIdx].pt.y = -1;
@@ -137,22 +144,21 @@ void calculateLocations() {
   float camera_ct = atan2(CAMERA_DISTANCE_FROM_SCREEN_Y, CAMERA_DISTANCE - CAMERA_DISTANCE_FROM_SCREEN_X);
   
   float theta_A = detectedBlobCoords[0].pt.x / (float) CAMERA_WIDTH * CAMERA_FOV + camera_ct;
-  float theta_B = detectedBlobCoords[1].pt.x / (float) CAMERA_WIDTH * CAMERA_FOV + camera_ct;
+  float theta_B = (CAMERA_WIDTH - detectedBlobCoords[1].pt.x) / (float) CAMERA_WIDTH * CAMERA_FOV + camera_ct;
   float theta_P = PI - theta_A - theta_B;
 
   float d_A = CAMERA_DISTANCE * sin(theta_A) / sin(theta_P);
   float d_B = CAMERA_DISTANCE * sin(theta_B) / sin(theta_P);
 
-  float x_prime = cos(theta_A) * d_A;
-  float y_prime = sin(theta_A) * d_A;
+  float x_prime = cos(theta_A) * d_B;
+  float y_prime = sin(theta_A) * d_B;
 
   int x = x_prime - CAMERA_DISTANCE_FROM_SCREEN_X;
   int y = y_prime - CAMERA_DISTANCE_FROM_SCREEN_Y;
 
   printf(
-          "x=%d, y=%d (camera_ct=%.2f, theta_A=%.2f, theta_B=%.2f, theta_P=%.2f, d_A=%.2f, d_B=%.2f, x_prime=%.2f, y_prime=%.2f)\n",
+          "x=%d, y=%d (thetaA=%.2f, thetaB=%.2f, thetaP=%.2f, dA=%.0f, dB=%.0f, x'=%.0f, y'=%.0f)\n",
           x, y,
-          camera_ct,
           theta_A, theta_B, theta_P,
           d_A, d_B,
           x_prime, y_prime);
