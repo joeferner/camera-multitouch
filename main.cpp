@@ -36,7 +36,7 @@ cv::KeyPoint detectedBlobCoords[CAMERA_COUNT];
 #define MOUSE_LBUTTON_UP   1
 #define MOUSE_LBUTTON_DOWN 2
 
-int captureInput = 0;
+int captureInput = 1;
 int mouseState = MOUSE_LBUTTON_UP;
 int mouseX = 0;
 int mouseY = 0;
