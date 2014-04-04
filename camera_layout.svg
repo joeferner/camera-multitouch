@@ -170,6 +170,22 @@
         <g latexdraw:type="text" id="id114" fill="black" latexdraw:position="bl">
             <text x="748.8000000000003" y="130.4000000000001"><![CDATA[$\theta_{CT}=\tan^{-1}\frac{d_{C_y}}{ d_P - d_{C_x} }$]]></text>
         </g>
+        <g latexdraw:type="joinedLines" id="id136">
+            <polyline
+                points="470.3999999999999,60.79999999999999 470.3999999999999,250.39999999999995 455.19999999999993,250.39999999999995 457.5999999999999,252.79999999999995 "
+                stroke-width="1.0" stroke="#b3b3b3" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="text" id="id138" fill="black" latexdraw:position="bl">
+            <text x="481.5999999999999" y="161.59999999999997"><![CDATA[$y'$]]></text>
+        </g>
+        <g latexdraw:type="joinedLines" id="id145">
+            <polyline
+                points="422.3999999999999,280.79999999999995 422.3999999999999,291.19999999999993 59.99999999999999,288.79999999999995 59.99999999999999,279.99999999999994 "
+                stroke-width="1.0" stroke="#b3b3b3" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="text" id="id147" fill="black" latexdraw:position="bl">
+            <text x="243.19999999999968" y="311.99999999999983"><![CDATA[$x'$]]></text>
+        </g>
     </g>
     <defs/>
     <metadata>
