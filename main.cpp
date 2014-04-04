@@ -33,7 +33,11 @@ cv::Mat windowImg(PREVIEW_WINDOW_HEIGHT + 1, PREVIEW_WINDOW_WIDTH + 1, CV_8UC3 /
 cv::Rect* cropRects[CAMERA_COUNT];
 cv::KeyPoint detectedBlobCoords[CAMERA_COUNT];
 
+#define MOUSE_LBUTTON_UP   1
+#define MOUSE_LBUTTON_DOWN 2
+
 int captureInput = 0;
+int mouseState = MOUSE_LBUTTON_UP;
 
 void initInputContext();
 void releaseInputContext();
@@ -133,16 +137,21 @@ void displayCaptures(int cameraIdx, std::vector<cv::KeyPoint> &keypoints) {
 }
 
 // see camera_layout
+
 void calculateLocations() {
   if (CAMERA_COUNT != 2) {
     return;
   }
   if (detectedBlobCoords[0].pt.x < 0 || detectedBlobCoords[1].pt.x < 0) {
+    if (mouseState == MOUSE_LBUTTON_DOWN) {
+      inputMouseUp(inputContext);
+      mouseState = MOUSE_LBUTTON_UP;
+    }
     return;
   }
 
   float camera_ct = atan2(CAMERA_DISTANCE_FROM_SCREEN_Y, CAMERA_DISTANCE - CAMERA_DISTANCE_FROM_SCREEN_X);
-  
+
   float theta_A = detectedBlobCoords[0].pt.x / (float) CAMERA_WIDTH * CAMERA_FOV + camera_ct;
   float theta_B = (CAMERA_WIDTH - detectedBlobCoords[1].pt.x) / (float) CAMERA_WIDTH * CAMERA_FOV + camera_ct;
   float theta_P = PI - theta_A - theta_B;
@@ -164,6 +173,10 @@ void calculateLocations() {
           x_prime, y_prime);
   if (captureInput) {
     inputMouseMove(inputContext, x, y);
+    if (mouseState == MOUSE_LBUTTON_UP) {
+      inputMouseDown(inputContext);
+      mouseState = MOUSE_LBUTTON_DOWN;
+    }
   }
 }
 
