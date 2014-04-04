@@ -38,6 +38,8 @@ cv::KeyPoint detectedBlobCoords[CAMERA_COUNT];
 
 int captureInput = 0;
 int mouseState = MOUSE_LBUTTON_UP;
+int mouseX = 0;
+int mouseY = 0;
 
 void initInputContext();
 void releaseInputContext();
@@ -144,7 +146,7 @@ void calculateLocations() {
   }
   if (detectedBlobCoords[0].pt.x < 0 || detectedBlobCoords[1].pt.x < 0) {
     if (mouseState == MOUSE_LBUTTON_DOWN) {
-      inputMouseUp(inputContext);
+      inputMouseUp(inputContext, mouseX, mouseY);
       mouseState = MOUSE_LBUTTON_UP;
     }
     return;
@@ -174,9 +176,11 @@ void calculateLocations() {
   if (captureInput) {
     inputMouseMove(inputContext, x, y);
     if (mouseState == MOUSE_LBUTTON_UP) {
-      inputMouseDown(inputContext);
+      inputMouseDown(inputContext, mouseX, mouseY);
       mouseState = MOUSE_LBUTTON_DOWN;
     }
+    mouseX = x;
+    mouseY = y;
   }
 }
 
