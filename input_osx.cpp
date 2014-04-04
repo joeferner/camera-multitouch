@@ -24,7 +24,8 @@ void inputEnd(InputContext* ctx) {
 }
 
 void inputMouseMove(InputContext* ctx, int x, int y) {
-  CGWarpMouseCursorPosition(CGPointMake(x, y));
+  OSXInputContext* osxctx = (OSXInputContext*) ctx;
+  CGDisplayMoveCursorToPoint(osxctx->displayID, CGPointMake(x, y));
 }
 
 void inputMouseDown(InputContext* ctx, int x, int y) {
