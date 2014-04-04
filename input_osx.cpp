@@ -17,6 +17,9 @@ InputContext* inputBegin() {
 }
 
 void inputEnd(InputContext* ctx) {
+  OSXInputContext* osxctx = (OSXInputContext*) ctx;
+
+  delete osxctx;
 }
 
 void inputMouseMove(InputContext* ctx, int x, int y) {
