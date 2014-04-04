@@ -40,3 +40,10 @@ void inputMouseMove(InputContext* ctx, int x, int y) {
   XFlush(x11ctx->display);
 }
 
+void inputMouseDown(InputContext* ctx) {
+  printf("not implemented\n");
+}
+
+void inputMouseUp(InputContext* ctx) {
+  printf("not implemented\n");  
+}

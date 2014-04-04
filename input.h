@@ -11,6 +11,8 @@ extern "C" {
   InputContext* inputBegin();
   void inputEnd(InputContext* ctx);
   void inputMouseMove(InputContext* ctx, int x, int y);
+  void inputMouseDown(InputContext* ctx);
+  void inputMouseUp(InputContext* ctx);
 
 
 #ifdef	__cplusplus
