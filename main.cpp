@@ -24,6 +24,7 @@
 #define CAMERA_WIDTH                   1920       /* set to camera x resolution */
 #define CAMERA_FOV                     1.20427718 /* 69 degrees */
 #define TIME_MS_UNTIL_MOUSE_CLICK      1000
+#define MOUSE_CLICK_RADIUS             50
 
 CvCapture* capture[CAMERA_COUNT];
 InputContext* inputContext;
@@ -39,6 +40,8 @@ int captureInput = 1;
 int mouseLButtonState = MOUSE_LBUTTON_UP;
 int mouseX = 0;
 int mouseY = 0;
+int mouseStartLButtonDownX = 0;
+int mouseStartLButtonDownY = 0;
 long mouseStartLButtonDownTime = 0;
 
 void initInputContext();
@@ -50,6 +53,7 @@ void initDetectors();
 void displayCaptures(int cameraIdx, std::vector<cv::KeyPoint> &keypoints);
 void calculateLocations();
 long timems();
+int distance(int x1, int y1, int x2, int y2);
 
 int main(int argc, char** argv) {
   if (captureInput) {
@@ -177,11 +181,14 @@ void calculateLocations() {
           x_prime, y_prime);
   if (captureInput) {
     if (mouseLButtonState == MOUSE_LBUTTON_UP) {
-      if (mouseStartLButtonDownTime == 0) {
+      if (mouseStartLButtonDownTime == 0
+              || distance(x, y, mouseStartLButtonDownX, mouseStartLButtonDownY) > MOUSE_CLICK_RADIUS) {
         mouseStartLButtonDownTime = timems();
+        mouseStartLButtonDownX = x;
+        mouseStartLButtonDownY = y;
       }
       if (timems() - mouseStartLButtonDownTime > TIME_MS_UNTIL_MOUSE_CLICK) {
-        inputMouseDown(inputContext, mouseX, mouseY);
+        inputMouseDown(inputContext, x, y);
         mouseLButtonState = MOUSE_LBUTTON_DOWN;
       }
     }
@@ -244,4 +251,10 @@ long timems() {
   struct timeval start;
   gettimeofday(&start, NULL);
   return ((start.tv_sec) * 1000 + start.tv_usec / 1000.0) + 0.5;
+}
+
+int distance(int x1, int y1, int x2, int y2) {
+  int dx = x2 - x1;
+  int dy = y2 - y1;
+  return sqrt(dx * dx + dy * dy);
 }
