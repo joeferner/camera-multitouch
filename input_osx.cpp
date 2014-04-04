@@ -24,8 +24,14 @@ void inputEnd(InputContext* ctx) {
 }
 
 void inputMouseMove(InputContext* ctx, int x, int y) {
-  OSXInputContext* osxctx = (OSXInputContext*) ctx;
-  CGDisplayMoveCursorToPoint(osxctx->displayID, CGPointMake(x, y));
+  CGEventRef mouseMove = CGEventCreateMouseEvent(
+      NULL, kCGEventMouseMoved,
+      CGPointMake(x, y),
+      kCGMouseButtonLeft // ignored
+  );
+
+  CGEventPost(kCGHIDEventTap, mouseMove);
+  CFRelease(mouseMove);
 }
 
 void inputMouseDown(InputContext* ctx, int x, int y) {
