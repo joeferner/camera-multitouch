@@ -184,7 +184,7 @@ void calculateLocations() {
     if (mouseLButtonState == MOUSE_LBUTTON_UP) {
       int d = distance(x, y, mouseStartLButtonDownX, mouseStartLButtonDownY);
       long t = timems();
-      printf("button down? d=%d, time=%d (%d)\n", d, t, t - mouseStartLButtonDownTime);
+      printf("button down? d=%d, time=%ldms (%ldms)\n", d, t, t - mouseStartLButtonDownTime);
       if (mouseStartLButtonDownTime == 0 || d > MOUSE_CLICK_RADIUS) {
         mouseStartLButtonDownTime = t;
         mouseStartLButtonDownX = x;
