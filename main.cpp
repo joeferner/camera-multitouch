@@ -171,11 +171,11 @@ void calculateLocations() {
           d_A, d_B,
           x_prime, y_prime);
   if (captureInput) {
-    inputMouseMove(inputContext, mouseLButtonState, x, y);
     if (mouseLButtonState == MOUSE_LBUTTON_UP) {
       inputMouseDown(inputContext, mouseX, mouseY);
       mouseLButtonState = MOUSE_LBUTTON_DOWN;
     }
+    inputMouseMove(inputContext, mouseLButtonState, x, y);
     mouseX = x;
     mouseY = y;
   }
