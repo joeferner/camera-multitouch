@@ -143,6 +143,7 @@ void calculateLocations() {
   }
   if (detectedBlobCoords[0].pt.x < 0 || detectedBlobCoords[1].pt.x < 0) {
     if (mouseLButtonState == MOUSE_LBUTTON_DOWN) {
+      printf("mouse up\n");
       inputMouseUp(inputContext, mouseX, mouseY);
       mouseLButtonState = MOUSE_LBUTTON_UP;
     }
@@ -172,7 +173,8 @@ void calculateLocations() {
           x_prime, y_prime);
   if (captureInput) {
     if (mouseLButtonState == MOUSE_LBUTTON_UP) {
-      inputMouseDown(inputContext, mouseX, mouseY);
+      printf("mouse down\n");
+      inputMouseDown(inputContext, x, y);
       mouseLButtonState = MOUSE_LBUTTON_DOWN;
     }
     inputMouseMove(inputContext, mouseLButtonState, x, y);
