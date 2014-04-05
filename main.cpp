@@ -8,7 +8,7 @@
 
 #define WINDOW_NAME                    "Camera Multi-touch"
 #define CAMERA_COUNT                   2
-#define PI                             3.1415
+#define PI                             3.14159265359
 #define BACKGROUND_SUBTRACTOR_REFRESH  0.001
 #define PREVIEW_WINDOW_WIDTH           1920
 #define PREVIEW_WINDOW_HEIGHT          200
@@ -21,9 +21,12 @@
 #define CAMERA_DISTANCE                (PX_PER_MM * (TV_WIDTH_MM + 2 * DCX_MM))
 #define CAMERA_DISTANCE_FROM_SCREEN_X  (PX_PER_MM * DCX_MM)
 #define CAMERA_DISTANCE_FROM_SCREEN_Y  (PX_PER_MM * DCY_MM)
-#define CAMERA_FOV                     1.20427718 /* 69 degrees */
 #define TIME_MS_UNTIL_MOUSE_CLICK      1000
 #define MOUSE_CLICK_RADIUS             10
+
+// For Logitech C615 (16:9 74deg diagnol field of view) the horizontal field of view is approximatly 64deg
+//    see http://4.bp.blogspot.com/-RSulTVMGSfs/UXU15YyZmjI/AAAAAAAACH8/cR17IgIpdqo/s1600/diagonal+fov.jpg
+#define CAMERA_FOV                     1.11701072 /* 64 degrees */
 
 CvCapture* capture[CAMERA_COUNT];
 InputContext* inputContext;
