@@ -37,6 +37,7 @@ void inputMouseMove(InputContext* ctx, int mouseLButtonState, int x, int y) {
 }
 
 void inputMouseDown(InputContext* ctx, int x, int y) {
+  CGDisplayHideCursor(kCGDirectMainDisplay);
   CGEventRef mouseDown = CGEventCreateMouseEvent(
       NULL, kCGEventLeftMouseDown,
       CGPointMake(x, y),
@@ -48,6 +49,7 @@ void inputMouseDown(InputContext* ctx, int x, int y) {
 }
 
 void inputMouseUp(InputContext* ctx, int x, int y) {
+  CGDisplayShowCursor(kCGDirectMainDisplay);
   CGEventRef mouseUp = CGEventCreateMouseEvent(
       NULL, kCGEventLeftMouseUp,
       CGPointMake(x, y),
