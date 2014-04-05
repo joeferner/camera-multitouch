@@ -13,12 +13,13 @@
 #define PREVIEW_WINDOW_WIDTH           1920
 #define PREVIEW_WINDOW_HEIGHT          200
 
+#define SCREEN_RESOLUTION_Y            1080
 #define TV_HEIGHT_MM                   1510.0
 #define TV_WIDTH_MM                    2608.0
 #define DCX_MM                         570.0
 #define DCY_MM                         260.0
-#define PX_PER_MM                      (1080.0 / TV_HEIGHT_MM)
-#define CAMERA_DISTANCE                (PX_PER_MM * (TV_WIDTH_MM + 2 * DCX_MM))
+#define PX_PER_MM                      ((float)SCREEN_RESOLUTION_Y / TV_HEIGHT_MM)
+#define CAMERA_DISTANCE                (PX_PER_MM * (TV_WIDTH_MM + 2.0 * DCX_MM))
 #define CAMERA_DISTANCE_FROM_SCREEN_X  (PX_PER_MM * DCX_MM)
 #define CAMERA_DISTANCE_FROM_SCREEN_Y  (PX_PER_MM * DCY_MM)
 #define TIME_MS_UNTIL_MOUSE_CLICK      1000
@@ -56,7 +57,7 @@ void initDetectors();
 void displayCaptures(int cameraIdx, std::vector<cv::KeyPoint> &keypoints);
 void calculateLocations();
 long timems();
-int distance(int x1, int y1, int x2, int y2);
+float distance(int x1, int y1, int x2, int y2);
 
 int main(int argc, char** argv) {
   if (captureInput) {
@@ -271,7 +272,7 @@ long timems() {
   return ((start.tv_sec) * 1000 + start.tv_usec / 1000.0) + 0.5;
 }
 
-int distance(int x1, int y1, int x2, int y2) {
+float distance(int x1, int y1, int x2, int y2) {
   int dx = x2 - x1;
   int dy = y2 - y1;
   return sqrt(dx * dx + dy * dy);
