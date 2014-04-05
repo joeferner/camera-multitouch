@@ -222,6 +222,13 @@ void initCameraCapture() {
       fprintf(stderr, "could not capture %d\n", i);
       exit(-1);
     }
+    printf("CV_CAP_PROP_BRIGHTNESS: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_BRIGHTNESS));
+    printf("CV_CAP_PROP_CONTRAST: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_CONTRAST));
+    printf("CV_CAP_PROP_SATURATION: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_SATURATION));
+    printf("CV_CAP_PROP_HUE: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_HUE));
+    printf("CV_CAP_PROP_GAIN: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_GAIN));
+    printf("CV_CAP_PROP_EXPOSURE: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_EXPOSURE));
+    //cvSetCaptureProperty(capture[i], CV_CAP_PROP_EXPOSURE, 1);
   }
 }
 
