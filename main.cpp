@@ -21,9 +21,8 @@
 #define CAMERA_DISTANCE                (PX_PER_MM * (TV_WIDTH_MM + 2 * DCX_MM))
 #define CAMERA_DISTANCE_FROM_SCREEN_X  (PX_PER_MM * DCX_MM)
 #define CAMERA_DISTANCE_FROM_SCREEN_Y  (PX_PER_MM * DCY_MM)
-#define CAMERA_WIDTH                   1920       /* set to camera x resolution */
 #define CAMERA_FOV                     1.20427718 /* 69 degrees */
-#define TIME_MS_UNTIL_MOUSE_CLICK      2000
+#define TIME_MS_UNTIL_MOUSE_CLICK      1000
 #define MOUSE_CLICK_RADIUS             10
 
 CvCapture* capture[CAMERA_COUNT];
@@ -36,6 +35,7 @@ cv::Mat windowImg(PREVIEW_WINDOW_HEIGHT + 1, PREVIEW_WINDOW_WIDTH + 1, CV_8UC3 /
 cv::Rect* cropRects[CAMERA_COUNT];
 cv::KeyPoint detectedBlobCoords[CAMERA_COUNT];
 
+int cameraResolutionX;
 int captureInput = 1;
 int mouseLButtonState = MOUSE_LBUTTON_UP;
 int mouseX = 0;
@@ -66,8 +66,8 @@ int main(int argc, char** argv) {
   for (int i = 0; i < CAMERA_COUNT; i++) {
     backgroundSubtractorColorOutput[i] = NULL;
   }
-  cropRects[0] = new cv::Rect(0, 610, CAMERA_WIDTH, 50);
-  cropRects[1] = new cv::Rect(0, 525, CAMERA_WIDTH, 50);
+  cropRects[0] = new cv::Rect(0, 610, cameraResolutionX, 50);
+  cropRects[1] = new cv::Rect(0, 525, cameraResolutionX, 50);
 
   cv::namedWindow(WINDOW_NAME);
 
@@ -81,7 +81,7 @@ int main(int argc, char** argv) {
         cv::Mat cameraImg = cameraIplImg;
         cv::Mat croppedImg = cameraImg(*cropRects[i]);
 
-        backgroundSubtractor[i]->operator ()(croppedImg, backgroundSubtractorOutput[i], BACKGROUND_SUBTRACTOR_REFRESH);
+        (*backgroundSubtractor[i])(croppedImg, backgroundSubtractorOutput[i], BACKGROUND_SUBTRACTOR_REFRESH);
         if (backgroundSubtractorColorOutput[i] == NULL) {
           backgroundSubtractorColorOutput[i] = new cv::Mat(backgroundSubtractorOutput[i].rows, backgroundSubtractorOutput[i].cols, CV_8UC3);
         }
@@ -161,8 +161,8 @@ void calculateLocations() {
 
   float camera_ct = atan2(CAMERA_DISTANCE_FROM_SCREEN_Y, CAMERA_DISTANCE - CAMERA_DISTANCE_FROM_SCREEN_X);
 
-  float theta_A = detectedBlobCoords[0].pt.x / (float) CAMERA_WIDTH * CAMERA_FOV + camera_ct;
-  float theta_B = (CAMERA_WIDTH - detectedBlobCoords[1].pt.x) / (float) CAMERA_WIDTH * CAMERA_FOV + camera_ct;
+  float theta_A = detectedBlobCoords[0].pt.x / (float) cameraResolutionX * CAMERA_FOV + camera_ct;
+  float theta_B = (cameraResolutionX - detectedBlobCoords[1].pt.x) / (float) cameraResolutionX * CAMERA_FOV + camera_ct;
   float theta_P = PI - theta_A - theta_B;
 
   float d_A = CAMERA_DISTANCE * sin(theta_A) / sin(theta_P);
@@ -222,6 +222,9 @@ void initCameraCapture() {
       fprintf(stderr, "could not capture %d\n", i);
       exit(-1);
     }
+    cameraResolutionX = cvGetCaptureProperty(capture[i], CV_CAP_PROP_FRAME_WIDTH);
+    printf("cameraResolutionX: %d\n", cameraResolutionX);
+
     printf("CV_CAP_PROP_BRIGHTNESS: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_BRIGHTNESS));
     printf("CV_CAP_PROP_CONTRAST: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_CONTRAST));
     printf("CV_CAP_PROP_SATURATION: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_SATURATION));
