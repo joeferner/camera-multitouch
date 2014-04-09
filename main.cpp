@@ -7,7 +7,7 @@
 #include "input.h"
 
 #define WINDOW_NAME                    "Camera Multi-touch"
-#define CAMERA_COUNT                   2
+#define CAMERA_COUNT                   1
 #define PI                             3.14159265359
 #define BACKGROUND_SUBTRACTOR_REFRESH  0.001
 #define PREVIEW_WINDOW_WIDTH           1920
@@ -47,6 +47,12 @@ int mouseY = 0;
 int mouseStartLButtonDownX = 0;
 int mouseStartLButtonDownY = 0;
 long mouseStartLButtonDownTime = 0;
+int trackbarBrightness;
+int trackbarContrast;
+int trackbarSaturation;
+int trackbarHue;
+int trackbarGain;
+int trackbarExposure;
 
 void initInputContext();
 void releaseInputContext();
@@ -58,6 +64,7 @@ void displayCaptures(int cameraIdx, std::vector<cv::KeyPoint> &keypoints);
 void calculateLocations();
 long timems();
 float distance(int x1, int y1, int x2, int y2);
+void trackbarCallback(int position);
 
 int main(int argc, char** argv) {
   if (captureInput) {
@@ -74,6 +81,13 @@ int main(int argc, char** argv) {
   cropRects[1] = new cv::Rect(0, 525, cameraResolutionX, 50);
 
   cv::namedWindow(WINDOW_NAME);
+
+  cvCreateTrackbar("Brightness", WINDOW_NAME, &trackbarBrightness, 100, trackbarCallback);
+  cvCreateTrackbar("Contrast", WINDOW_NAME, &trackbarContrast, 100, trackbarCallback);
+  cvCreateTrackbar("Saturation", WINDOW_NAME, &trackbarSaturation, 100, trackbarCallback);
+  cvCreateTrackbar("Hue", WINDOW_NAME, &trackbarHue, 100, trackbarCallback);
+  cvCreateTrackbar("Gain", WINDOW_NAME, &trackbarGain, 100, trackbarCallback);
+  cvCreateTrackbar("Exposure", WINDOW_NAME, &trackbarExposure, 100, trackbarCallback);
 
   printf("begin loop\n");
   while (1) {
@@ -230,12 +244,44 @@ void initCameraCapture() {
     printf("cameraResolutionX: %d\n", cameraResolutionX);
 
     printf("CV_CAP_PROP_BRIGHTNESS: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_BRIGHTNESS));
+    trackbarBrightness = cvGetCaptureProperty(capture[i], CV_CAP_PROP_BRIGHTNESS) * 100;
+
     printf("CV_CAP_PROP_CONTRAST: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_CONTRAST));
+    trackbarContrast = cvGetCaptureProperty(capture[i], CV_CAP_PROP_CONTRAST) * 100;
+
     printf("CV_CAP_PROP_SATURATION: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_SATURATION));
+    trackbarSaturation = cvGetCaptureProperty(capture[i], CV_CAP_PROP_SATURATION) * 100;
+
     printf("CV_CAP_PROP_HUE: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_HUE));
+    trackbarHue = cvGetCaptureProperty(capture[i], CV_CAP_PROP_HUE) * 100;
+
     printf("CV_CAP_PROP_GAIN: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_GAIN));
+    trackbarGain = cvGetCaptureProperty(capture[i], CV_CAP_PROP_GAIN) * 100;
+
     printf("CV_CAP_PROP_EXPOSURE: %f\n", cvGetCaptureProperty(capture[i], CV_CAP_PROP_EXPOSURE));
+    trackbarExposure = cvGetCaptureProperty(capture[i], CV_CAP_PROP_EXPOSURE) * 100;
+
     //cvSetCaptureProperty(capture[i], CV_CAP_PROP_EXPOSURE, 1);
+  }
+}
+
+#define UPDATE_CV_CAP_PROP(trackbarValue, propName, propNameString) \
+  newValue = (float) trackbarValue / 100.0; \
+  if (cvGetCaptureProperty(capture[i], propName) != newValue) { \
+    printf("new " propNameString " %d %f\n", i, newValue); \
+    cvSetCaptureProperty(capture[i], propName, newValue); \
+  }
+
+void trackbarCallback(int position) {
+  float newValue;
+
+  for (int i = 0; i < CAMERA_COUNT; i++) {
+    UPDATE_CV_CAP_PROP(trackbarBrightness, CV_CAP_PROP_BRIGHTNESS, "CV_CAP_PROP_BRIGHTNESS")
+    UPDATE_CV_CAP_PROP(trackbarContrast, CV_CAP_PROP_CONTRAST, "CV_CAP_PROP_CONTRAST")
+    UPDATE_CV_CAP_PROP(trackbarSaturation, CV_CAP_PROP_SATURATION, "CV_CAP_PROP_SATURATION")
+    UPDATE_CV_CAP_PROP(trackbarHue, CV_CAP_PROP_HUE, "CV_CAP_PROP_HUE")
+    UPDATE_CV_CAP_PROP(trackbarGain, CV_CAP_PROP_GAIN, "CV_CAP_PROP_GAIN")
+    UPDATE_CV_CAP_PROP(trackbarExposure, CV_CAP_PROP_EXPOSURE, "CV_CAP_PROP_EXPOSURE")
   }
 }
 
